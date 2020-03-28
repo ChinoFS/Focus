@@ -60,6 +60,8 @@ public class Controller {
     public void Problema(String id) {
         gridPane1.getChildren().clear();
         locacion = 3;
+
+        //Aqui va su parte nestor y migue
     }
 
     @FXML
