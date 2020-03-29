@@ -1,8 +1,6 @@
 package sample;
 
 import com.mongodb.*;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
