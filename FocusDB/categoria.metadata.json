@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"Focus.categoria"}],"uuid":"12bdb372d2a945a6b8c36ec670c611b9"}

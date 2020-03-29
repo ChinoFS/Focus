@@ -1,15 +1,17 @@
 package sample;
 
-import javafx.event.Event;
+import com.mongodb.*;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 
 
 public class Controller {
+    MongoClient mongoClient;
+    DB db;
     @FXML
     GridPane gridPane1;
     @FXML
@@ -18,11 +20,14 @@ public class Controller {
     Button batras;
     int locacion;
     String ID;
-    String [] categorias = {"Strings","Logica","Matematico","Otro"};
-    String [] problemas = {"Problema1", "Problema2"};
+    String [] [] categorias;
+    String []problemas;
 
     @FXML
     public void initialize() {
+        conexion();
+        DBCategorias();
+
         inicio();
     }
 
@@ -30,8 +35,8 @@ public class Controller {
         batras.setVisible(false);
         locacion = 1;
         for (int i=0;i<=categorias.length-1;i++){
-            Button button= new Button(categorias[i]);
-            button.setId(categorias[i]);
+            Button button= new Button(categorias[i][0]);
+            button.setId(categorias[i][1]);
             button.setOnAction(event -> problemas(button.getId()));
             button.setPrefSize(150,10);
             gridPane1.addRow(0,button);
@@ -42,6 +47,7 @@ public class Controller {
 
     public void problemas(String id) {
         ID = id;
+        DBProblemas(id);
         batras.setVisible(true);
         gridPane1.getChildren().clear();
         locacion = 2;
@@ -56,8 +62,7 @@ public class Controller {
         }
     }
 
-
-    public void Problema(String id) {
+    public void Problema(String nombre) {
         gridPane1.getChildren().clear();
         locacion = 3;
 
@@ -76,5 +81,57 @@ public class Controller {
             gridPane1.getChildren().clear();
             problemas(ID);
         }
+    }
+
+    public void DBCategorias(){
+        DBCollection coll = db.getCollection("categoria");
+        DBCursor cursor = coll.find();
+        int size = cursor.size();
+        categorias = new String[size][size];
+        int x=0;
+        try {
+            while(cursor.hasNext()) {
+                categorias[x][0]=(cursor.next().get("categoria"))+"";
+                x++;
+            }
+        } finally {
+            cursor.close();
+        }
+
+        coll = db.getCollection("categoria");
+        cursor = coll.find();
+        x=0;
+        try {
+            while(cursor.hasNext()) {
+                categorias[x][1]=(cursor.next().get("_id"))+"";
+                x++;
+            }
+        } finally {
+            cursor.close();
+        }
+
+    }
+
+    public void DBProblemas(String id){//id categoria
+        DBCollection coll = db.getCollection("problema");
+        BasicDBObject filtro = new BasicDBObject();
+        filtro.put("categoria", id);
+        DBCursor cursor = coll.find(filtro);
+        int size = cursor.size();
+        problemas = new String[size];
+        int x=0;
+        try {
+            while(cursor.hasNext()) {
+                problemas[x]=(cursor.next().get("problema"))+"";
+                x++;
+            }
+        } finally {
+            cursor.close();
+        }
+    }
+
+    public void conexion(){
+        mongoClient = new MongoClient( "localhost" , 27017 );
+        db= mongoClient.getDB("Focus");
     }
 }

@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"Focus.pruebas"}],"uuid":"56b5fb5736484bac9463c9f6cb26e31d"}
