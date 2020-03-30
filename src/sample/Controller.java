@@ -116,7 +116,7 @@ public class Controller {
         parte2.getChildren().add(descripcion);
         parte3.getChildren().add(environment);
         parte4.getChildren().add(environment1);
-        parteB.getChildren().addAll(prueba1, prueba2, prueba3, prueba4, prueba5);
+        parteB.getChildren().addAll(prueba1, prueba2, prueba3, prueba4, prueba5, prueba6);
 
         gridPane1.add(parte1, 0, 0);
         gridPane1.add(parte2, 0, 1);
