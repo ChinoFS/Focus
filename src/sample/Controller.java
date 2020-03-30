@@ -49,6 +49,7 @@ public class Controller {
         conexion();
         DBCategorias();
         codigosPruebas();
+        descripciones();
         inicio();
     }
 
@@ -97,7 +98,7 @@ public class Controller {
         environment1.setMinHeight(50);
         environment1.setMinWidth(50);
         titulo.setText(String.valueOf(id));
-        descripcion.setText("Descripcion");
+        descripcion.setText(desc.get(1).toString());
 
         prueba1.setText(dateFashion.get(0).nombre);prueba1.setMinWidth(100);
         prueba2.setText(dateFashion.get(1).nombre);prueba2.setMinWidth(100);
@@ -262,7 +263,7 @@ public class Controller {
     public void descripciones()
     {
         desc.add("");
-        desc.add("You and your date are trying to get a table at a restaurant. The parameter \"you\" is the stylishness of your clothes, in the range 0..10, and \"date\" is the stylishness of your date's clothes. The result getting the table is encoded as an int value with 0=no, 1=maybe, 2=yes. If either of you is very stylish, 8 or more, then the result is 2 (yes). With the exception that if either of you has style of 2 or less, then the result is 0 (no). Otherwise the result is 1 (maybe).");
+        desc.add("You and your date are trying to get a table at a restaurant.\n The parameter \"you\" is the stylishness of your clothes, in the range 0..10, \n and \"date\" is the stylishness of your date's clothes. The result getting the table is \n encoded as an int value with 0=no, 1=maybe, 2=yes. If either of you is very stylish, \n 8 or more, then the result is 2 (yes). With the exception that if either of you has style of 2 or less,\n then the result is 0 (no). Otherwise the result is 1 (maybe).");
         desc.add("Given three ints, a b c, return true if one of b or c is \"close\" (differing from a by at most 1), while the other is \"far\", differing from both other values by 2 or more. Note: Math.abs(num) computes the absolute value of a number.");
         desc.add("Given an array of strings, return a Map<String, Boolean> where each different string is a key and its value is true if that string appears 2 or more times in the array.");
         desc.add("Given a string, return a string where every appearance of the lowercase word \"is\" has been replaced with \"is not\". The word \"is\" should not be immediately preceeded or followed by a letter -- so for example the \"is\" in \"this\" does not count. (Note: Character.isLetter(char) tests if a char is a letter.)");
