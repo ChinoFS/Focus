@@ -13,7 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.beans.EventHandler;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Controller {
     MongoClient mongoClient;
@@ -31,26 +33,36 @@ public class Controller {
     ArrayList<String> desc = new ArrayList<>();
     String descr;
 
-    TextArea environment = new TextArea();
-    TextArea environment1 = new TextArea();
+    TextField campo1 = new TextField();
+    TextField campo2 = new TextField();
+    TextField campo3 = new TextField();
+    TextField campo4 = new TextField();
+    TextField campo5 = new TextField();
     Label titulo = new Label();
     Label descripcion = new Label();
+    Label parametros = new Label();
     Button prueba1 = new Button();
-    Button prueba2 = new Button();
-    Button prueba3 = new Button();
-    Button prueba4 = new Button();
-    Button prueba5 = new Button();
-    Button prueba6 = new Button();
-    Button verificar = new Button();
+    Button BtnJson = new Button();
     ArrayList<dateFashion> dateFashion = new ArrayList<>();
+    ArrayList<closeFar> closeFar = new ArrayList<>();
+    ArrayList<wordMultiple> wordMultiple = new ArrayList<>();
+    ArrayList<notRepla> notRepla = new ArrayList<>();
+    ArrayList<linearIn> linearIn = new ArrayList<>();
+    HBox parte1 = new HBox();
+    HBox parte2 = new HBox();
+    HBox parte3 = new HBox();
+    HBox parte4 = new HBox();
+
+    VBox parteB = new VBox();
+
 
     @FXML
     public void initialize() {
         conexion();
         DBCategorias();
         codigosPruebas();
-        descripciones();
         inicio();
+
     }
 
     public  void inicio (){
@@ -88,100 +100,40 @@ public class Controller {
 
         ID = id;
         batras.setVisible(true);
-
-        descripciones();
-
         gridPane1.getChildren().clear();
 
-        environment.setMinHeight(50);
-        environment.setMinWidth(50);
-        environment1.setMinHeight(50);
-        environment1.setMinWidth(50);
+        campo1.setMinHeight(50);
+        campo1.setMinWidth(50);
+        campo2.setMinHeight(50);
+        campo2.setMinWidth(50);
         titulo.setText(String.valueOf(id));
-        descripcion.setText(desc.get(1).toString());
+        descripcion.setText(""+ObtenerDes(id));
+        parametros.setText("Ingrese los parametros correspondientes");
+        prueba1.setText("Verificar");prueba1.setMinWidth(100);
 
-        prueba1.setText(dateFashion.get(0).nombre);prueba1.setMinWidth(100);
-        prueba2.setText(dateFashion.get(1).nombre);prueba2.setMinWidth(100);
-        prueba3.setText(dateFashion.get(2).nombre);prueba3.setMinWidth(100);
-        prueba4.setText(dateFashion.get(3).nombre);prueba4.setMinWidth(100);
-        prueba5.setText(dateFashion.get(4).nombre);prueba5.setMinWidth(100);
-        prueba6.setText(dateFashion.get(5).nombre);prueba6.setMinWidth(100);
-        verificar.setText("Verificar");
+        BtnJson.setText("Json");
 
-        HBox parte1 = new HBox();
-        HBox parte2 = new HBox();
-        HBox parte3 = new HBox();
-        HBox parte4 = new HBox();
+        metodos(titulo.getText());
 
-        VBox parteB = new VBox();
 
-        prueba1.setOnAction(event -> {
-            Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
-            dialogo.setTitle("Posible Solucion");
-            dialogo.setHeaderText(null);
-            dialogo.setContentText("Codigo" + dateFashion.get(0).getDescripcion());
-            dialogo.initStyle(StageStyle.UTILITY);
-            dialogo.showAndWait();
-
+        BtnJson.setOnAction(event -> {
+            //Para generar el json
         });
-        prueba2.setOnAction(event -> {
-            Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
-            dialogo.setTitle("Posible Solucion");
-            dialogo.setHeaderText(null);
-            dialogo.setContentText("Codigo" + dateFashion.get(1).getDescripcion());
-            dialogo.initStyle(StageStyle.UTILITY);
-            dialogo.showAndWait();
 
-        });
-        prueba3.setOnAction(event -> {
-            Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
-            dialogo.setTitle("Posible Solucion");
-            dialogo.setHeaderText(null);
-            dialogo.setContentText("Codigo" + dateFashion.get(2).getDescripcion());
-            dialogo.initStyle(StageStyle.UTILITY);
-            dialogo.showAndWait();
 
-        });
-        prueba4.setOnAction(event -> {
-            Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
-            dialogo.setTitle("Posible Solucion");
-            dialogo.setHeaderText(null);
-            dialogo.setContentText("Codigo" + dateFashion.get(3).getDescripcion());
-            dialogo.initStyle(StageStyle.UTILITY);
-            dialogo.showAndWait();
-
-        });
-        prueba5.setOnAction(event -> {
-            Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
-            dialogo.setTitle("Posible Solucion");
-            dialogo.setHeaderText(null);
-            dialogo.setContentText("Codigo" + dateFashion.get(4).getDescripcion());
-            dialogo.initStyle(StageStyle.UTILITY);
-            dialogo.showAndWait();
-
-        });
-        prueba6.setOnAction(event -> {
-            Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
-            dialogo.setTitle("Posible Solucion");
-            dialogo.setHeaderText(null);
-            dialogo.setContentText("Codigo" + dateFashion.get(5).getDescripcion());
-            dialogo.initStyle(StageStyle.UTILITY);
-            dialogo.showAndWait();
-
-        });
 
         parte1.getChildren().add(titulo);
         parte2.getChildren().add(descripcion);
-        parte3.getChildren().add(environment);
-        parte4.getChildren().add(environment1);
-        parteB.getChildren().addAll(prueba1, prueba2, prueba3, prueba4, prueba5, prueba6);
+        parte4.getChildren().add(parametros);
+
+        parteB.getChildren().add(prueba1);
 
         gridPane1.add(parte1, 0, 0);
         gridPane1.add(parte2, 0, 1);
-        gridPane1.add(parte3, 0, 2);
-        gridPane1.add(parteB, 1, 2);
-        //gridPane1.add(parte4, 2, 2);
-        gridPane1.add(verificar, 0, 3);
+        gridPane1.add(parte4, 0, 2);
+
+        gridPane1.add(parteB, 2, 3);
+        gridPane1.add(BtnJson, 0, 4);
 
         gridPane1.setVgap(15);
         gridPane1.setHgap(15);
@@ -253,6 +205,34 @@ public class Controller {
             cursor.close();
         }
     }
+    private Object ObtenerDes(String id) {
+        DBCollection coll = db.getCollection("problema");
+        BasicDBObject filtro = new BasicDBObject();
+        filtro.put("problema", id);
+        DBCursor cursor = coll.find(filtro);
+        try {
+            while(cursor.hasNext()) {
+                return cursor.next().get("descripcion");
+            }
+        } finally {
+            cursor.close();
+        }
+        return null;
+    }
+    private DBObject ObtenerJson(String id) {
+        DBCollection coll = db.getCollection("problema");
+        BasicDBObject filtro = new BasicDBObject();
+        filtro.put("problema", id);
+        DBCursor cursor = coll.find(filtro);
+        try {
+            while(cursor.hasNext()) {
+                return cursor.next();
+            }
+        } finally {
+            cursor.close();
+        }
+        return null;
+    }
 
     public void conexion(){
         mongoClient = new MongoClient( "localhost" , 27017 );
@@ -260,18 +240,159 @@ public class Controller {
     }
     //------------------------------------------------------------------------------------------------------------------
 
-    public void descripciones()
+    public void metodos(String titulo)
     {
-        desc.add("");
-        desc.add("You and your date are trying to get a table at a restaurant.\n The parameter \"you\" is the stylishness of your clothes, in the range 0..10, \n and \"date\" is the stylishness of your date's clothes. The result getting the table is \n encoded as an int value with 0=no, 1=maybe, 2=yes. If either of you is very stylish, \n 8 or more, then the result is 2 (yes). With the exception that if either of you has style of 2 or less,\n then the result is 0 (no). Otherwise the result is 1 (maybe).");
-        desc.add("Given three ints, a b c, return true if one of b or c is \"close\" (differing from a by at most 1), while the other is \"far\", differing from both other values by 2 or more. Note: Math.abs(num) computes the absolute value of a number.");
-        desc.add("Given an array of strings, return a Map<String, Boolean> where each different string is a key and its value is true if that string appears 2 or more times in the array.");
-        desc.add("Given a string, return a string where every appearance of the lowercase word \"is\" has been replaced with \"is not\". The word \"is\" should not be immediately preceeded or followed by a letter -- so for example the \"is\" in \"this\" does not count. (Note: Character.isLetter(char) tests if a char is a letter.)");
-        desc.add("Given two arrays of ints sorted in increasing order, outer and inner, return true if all of the numbers in inner appear in outer. The best solution makes only a single \"linear\" pass of both arrays, taking advantage of the fact that both arrays are already in sorted order.");
+        if(titulo.equals("dateFashion")){
+            parte3.getChildren().addAll(campo1, campo2);
+            gridPane1.add(parte3, 0, 3);
+            prueba1.setOnAction(event -> {
+
+                dateFashion(Integer.valueOf(campo1.getText()), Integer.valueOf(campo2.getText()));
+
+            });
+
+
+        }else if(titulo.equals("closeFar")){
+            parte3.getChildren().addAll(campo1, campo2, campo3);
+            gridPane1.add(parte3, 0, 3);
+            prueba1.setOnAction(event -> {
+                closeFar(Integer.valueOf(campo1.getText()), Integer.valueOf(campo2.getText()), Integer.valueOf(campo3.getText()));
+            });
+        }else if(titulo.equals("wordMultiple")){
+            parte3.getChildren().addAll(campo1, campo2, campo3, campo4, campo5);
+            gridPane1.add(parte3, 0, 3);
+            //wordMultiple(Integer.valueOf(campo1),) NO HABILITADO
+        }else if(titulo.equals("notReplace")){
+            parte3.getChildren().addAll(campo1);
+            gridPane1.add(parte3, 0, 3);
+            prueba1.setOnAction(event -> {
+                notReplace(campo1.getText());
+            });
+
+        }else if(titulo.equals("linearIn")){
+            //linearIn() NO HABILITADO
+        }
     }
+    //--------Codigos CodingBat-----------------------------------------------------------------------------------------
+    public int dateFashion(int you, int date) {
+        int result;
+
+        if (you <= 2 || date <= 2)
+        {
+            result = 0;
+        }
+        else
+        {
+            if (you >= 8 || date >= 8)
+            {
+                result = 2;
+            }
+            else {
+                result = 1;
+
+            }
+        }
+        Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+        dialogo.setTitle("Prueba Unitaria");
+        dialogo.setHeaderText(null);
+        dialogo.setContentText("Resultado \n" + result);
+        dialogo.initStyle(StageStyle.UTILITY);
+        dialogo.showAndWait();
+
+        return result;
+    }
+
+    public boolean closeFar(int a, int b, int c)
+    {
+        boolean bandera = true;
+        if(Math.abs(a-b) <= 1 && Math.abs(a-c) >= 2 && Math.abs(b-c) >= 2) {
+             bandera = true;
+        }
+        else if(Math.abs(a - c) <= 1 && Math.abs(a - b) >= 2 && Math.abs(b - c) >= 2)
+        bandera = true;
+        else {
+            bandera = false;
+        }
+        Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+        dialogo.setTitle("Prueba Unitaria");
+        dialogo.setHeaderText(null);
+        dialogo.setContentText("Resultado \n" + bandera);
+        dialogo.initStyle(StageStyle.UTILITY);
+        dialogo.showAndWait();
+        return bandera;
+    }
+    public Map<String, Boolean> wordMultiple(String[] strings)
+    {
+        Map<String, Boolean> map = new HashMap<>();
+
+        for(String s:strings)
+        {
+            if(map.containsKey(s))
+            {
+                map.put(s, true);
+            }
+            else
+            {
+                map.put(s,false);
+            }
+        }
+        return map;
+    }
+    public String notReplace(String str)
+    {
+        String result = "";
+        for(int i = 0; i < str.length(); i++)
+        {
+            if(i-1>=0 && Character.isLetter(str.charAt(i-1)) ||
+                    i+2<str.length() && Character.isLetter(str.charAt(i+2)))
+            {
+                result += str.charAt(i);
+            }
+            else if(i+1 < str.length() && str.substring(i,i+2).equals("is"))
+            {
+                result += "is not";
+                i++;
+            }
+            else result += str.charAt(i);
+        }
+
+        Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+        dialogo.setTitle("Prueba Unitaria");
+        dialogo.setHeaderText(null);
+        dialogo.setContentText("Resultado \n" + result);
+        dialogo.initStyle(StageStyle.UTILITY);
+        dialogo.showAndWait();
+
+        return result;
+    }
+    public boolean linearIn(int[] outer, int[] inner)
+    {
+        int numFound = 0;
+
+        if(inner.length == 0)
+            return true;
+
+        int cont = 0;
+        for(int i = 0; i < outer.length; i++)
+        {
+            if(outer[i] == inner[cont])
+            {
+                numFound++;
+                cont++;
+            }
+            else if(outer[i] > inner[cont])
+                return false;
+
+            if(numFound == inner.length)
+                return true;
+        }
+        return false;
+    }
+    //------------------------------------------------------------------------------------------------------------------
     public void codigosPruebas()
     {
         //---------------Array dateFashion--------------------------------
+
 
         dateFashion.add(new dateFashion("dateFashion(5, 10)","2", "public int dateFashion(int you, int date)\n" +
             " {\n" +
@@ -280,6 +401,7 @@ public class Controller {
             "    val = 2;\n" +
             "  return val;\n" +
             "}\n"));
+        dateFashion.add(new dateFashion("dateFashion(9, 9)", "2", ""));
         dateFashion.add(new dateFashion("dateFashion(10, 5)","2", "public int dateFashion(int you, int date)\n" +
                 " {\n" +
                 "int val=0;\n" +
@@ -303,6 +425,8 @@ public class Controller {
                 "    \n" +
                 "  return val; \n" +
                 "}\n"));
+        dateFashion.add(new dateFashion("dateFashion(2, 9)", "0", ""));
+        dateFashion.add(new dateFashion("dateFashion(2, 2)", "0", ""));
         dateFashion.add(new dateFashion("dateFashion(2, 7)","0", "public int dateFashion(int you, int date)\n" +
                 "{\n" +
                 "  int val=0;\n" +
@@ -311,15 +435,26 @@ public class Controller {
                 "    \n" +
                 "  return val; \n" +
                 "}\n"));
-        //--------------closeFar-----------------------------------------
-        ArrayList<closeFar> closeFar = new ArrayList<>();
+        dateFashion.add(new dateFashion("dateFashion(6, 2)", "0", ""));
+        //--------------closeFar----------------------------------------------------------------------------------------
+
         closeFar.add(new closeFar("closeFar(1, 2, 10)", "true", "public boolean closeFar(int a, int b, int c)\n" +
+            "{\n" +
+            " boolean result=false;\n" +
+            "  if(Math.abs(a-b) <= 1)\n" +
+            "              result = true;\n" +
+            "            return result;\n" +
+            "}\n"));
+        closeFar.add(new closeFar("closeFar(4, 1, 3)", "true", ""));
+        closeFar.add(new closeFar("closeFar(-1, 10, 0)", "true", "public boolean closeFar(int a, int b, int c)\n" +
                 "{\n" +
-                " boolean result=false;\n" +
-                "  if(Math.abs(a-b) <= 1)\n" +
-                "              result = true;\n" +
-                "            return result;\n" +
+                "  boolean result=false;\n" +
+                " \n" +
+                "    if(Math.abs(a - c) <= 1 )\n" +
+                "      result = true;\n" +
+                "    return result;\n" +
                 "}\n"));
+        closeFar.add(new closeFar("closeFar(0, -1, 10)", "true", ""));
         closeFar.add(new closeFar("closeFar(8, 6, 9)", "true", "public boolean closeFar(int a, int b, int c)\n" +
                 "{\n" +
                 "    boolean result=false;\n" +
@@ -329,14 +464,7 @@ public class Controller {
                 "    \n" +
                 "    return result;\n" +
                 "}\n"));
-        closeFar.add(new closeFar("closeFar(-1, 10, 0)", "true", "public boolean closeFar(int a, int b, int c)\n" +
-                "{\n" +
-                "  boolean result=false;\n" +
-                " \n" +
-                "    if(Math.abs(a - c) <= 1 )\n" +
-                "      result = true;\n" +
-                "    return result;\n" +
-                "}\n"));
+
         closeFar.add(new closeFar("closeFar(1, 2, 3)", "false", "public boolean closeFar(int a, int b, int c)\n" +
                 "{\n" +
                 "  boolean result = true;\n" +
@@ -361,10 +489,11 @@ public class Controller {
                 "    \n" +
                 "     return result;\n" +
                 "} \n"));
+        closeFar.add(new closeFar("closeFar(8, 9, 10)", "false", ""));
+        closeFar.add(new closeFar("closeFar(10, 8, 9)", "false", ""));
 
+        //--------------wordMultiple------------------------------------------------------------------------------------
 
-        //--------------wordMultiple-------------------------------------
-        ArrayList<wordMultiple> wordMultiple = new ArrayList<>();
         wordMultiple.add(new wordMultiple("wordMultiple([\"a\", \"b\", \"a\", \"c\", \"b\"])", "{\"a\": true, \"b\": true, \"c\": false}", " public Map<String, Boolean> wordMultiple(String[] strings)\n" +
                 "{\n" +
                 "     Map<String, Boolean> map = new HashMap<String,Boolean>();\n" +
@@ -414,8 +543,8 @@ public class Controller {
                 "  return map;\n" +
                 "}\n"));
 
-        //--------------notRepla-----------------------------------------
-            ArrayList<notRepla> notRepla = new ArrayList<>();
+        //--------------notRepla----------------------------------------------------------------------------------------
+
             notRepla.add(new notRepla("notReplace(\"is test\")", "\"is not test\"", "public String notReplace(String str)\n" +
                     "{\n" +
                     "  String result = \"\";\n" +
@@ -431,6 +560,7 @@ public class Controller {
                     " \n" +
                     "  return result;\n" +
                     "}\n"));
+            notRepla.add(new notRepla("notReplace(\"is-is\")", "\"is not-is not\" ", ""));
             notRepla.add(new notRepla("notReplace(\"This is right\")", "\"This is not right\"", "public String notReplace(String str)\n" +
                     "{\n" +
                     "  String result = \"\";\n" +
@@ -475,6 +605,7 @@ public class Controller {
                     "  }\n" +
                     " \n" +
                     "  re\n"));
+            notRepla.add(new notRepla("notReplace(\"isis\")", "\"isis\" ", ""));
             notRepla.add(new notRepla("notReplace(\"AAAis is\")", "\"AAAis is not\"", "public String notReplace(String str)\n" +
                     "{\n" +
                     "  String result = \"\";\n" +
@@ -494,8 +625,8 @@ public class Controller {
                     "  return result;\n" +
                     "}\n"));
 
-        //--------------linearIn-----------------------------------------
-            ArrayList<linearIn> linearIn = new ArrayList<>();
+        //--------------linearIn----------------------------------------------------------------------------------------
+
             linearIn.add(new linearIn("linearIn([1, 2, 4, 6], [2, 4])", "true", "public boolean linearIn(int[] outer, int[] inner)\n" +
                     "{\n" +
                     "  int numFound = 0;\n" +
@@ -514,6 +645,8 @@ public class Controller {
                     "      }\n" +
                     "      return false;\n" +
                     "}\n"));
+            linearIn.add(new linearIn("linearIn([2, 2, 4, 4, 6, 6], [2, 4])", "true ", ""));
+            linearIn.add(new linearIn("linearIn([2, 2, 2, 2, 2], [2, 2])", "true ", ""));
             linearIn.add(new linearIn("linearIn([1, 2, 3], [2])", "true", "public boolean linearIn(int[] outer, int[] inner)\n" +
                     "{\n" +
                     "  int numFound = 0;\n" +
@@ -557,6 +690,7 @@ public class Controller {
                     "        result=false;\n" +
                     "      }\n" +
                     "      return result;\n"));
+            linearIn.add(new linearIn("linearIn([2, 2, 2, 2, 2], [2, 4])", "false", ""));
             linearIn.add(new linearIn("linearIn([1, 2, 3], [-1])", "false", "public boolean linearIn(int[] outer, int[] inner)\n" +
                     "{\n" +
                     "\n" +
