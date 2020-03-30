@@ -3,9 +3,12 @@ package sample;
 import com.mongodb.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
-
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class Controller {
     MongoClient mongoClient;
@@ -19,7 +22,8 @@ public class Controller {
     int locacion;
     String ID;
     String [] [] categorias;
-    String []problemas;
+    String [] problemas;
+    String [] descripcion;
 
     @FXML
     public void initialize() {
@@ -60,9 +64,64 @@ public class Controller {
         }
     }
 
-    public void Problema(String nombre) {
+    public void Problema(String id) {
+
+        ID = id;
+        batras.setVisible(true);
+
+        TextArea environment = new TextArea();
+        TextArea environment1 = new TextArea();
+        Label titulo = new Label();
+        Label descripcion = new Label();
+        Button prueba1 = new Button();
+        Button prueba2 = new Button();
+        Button prueba3 = new Button();
+        Button prueba4 = new Button();
+        Button prueba5 = new Button();
+        Button verificar = new Button();
+
         gridPane1.getChildren().clear();
+
+        environment.setMinHeight(50);
+        environment.setMinWidth(50);
+        environment1.setMinHeight(50);
+        environment1.setMinWidth(50);
+        titulo.setText(String.valueOf(id));
+        descripcion.setText("Descripcion");
+
+        prueba1.setText("prueba 1");prueba1.setMinWidth(100);
+        prueba2.setText("prueba 2");prueba2.setMinWidth(100);
+        prueba3.setText("prueba 3");prueba3.setMinWidth(100);
+        prueba4.setText("prueba 4");prueba4.setMinWidth(100);
+        prueba5.setText("prueba 5");prueba5.setMinWidth(100);
+        verificar.setText("Verificar");
+
+        HBox parte1 = new HBox();
+        HBox parte2 = new HBox();
+        HBox parte3 = new HBox();
+        HBox parte4 = new HBox();
+
+        VBox parteB = new VBox();
+
+
+
+        parte1.getChildren().add(titulo);
+        parte2.getChildren().add(descripcion);
+        parte3.getChildren().add(environment);
+        parte4.getChildren().add(environment1);
+        parteB.getChildren().addAll(prueba1, prueba2, prueba3, prueba4, prueba5);
+
+        gridPane1.add(parte1, 0, 0);
+        gridPane1.add(parte2, 0, 1);
+        gridPane1.add(parte3, 0, 2);
+        gridPane1.add(parteB, 1, 2);
+        gridPane1.add(parte4, 2, 2);
+        gridPane1.add(verificar, 0, 3);
+
+        gridPane1.setVgap(15);
+        gridPane1.setHgap(15);
         locacion = 3;
+
 
         //Aqui va su parte nestor y migue
     }
@@ -70,6 +129,7 @@ public class Controller {
     @FXML
     public void atras(){
         if(locacion ==1){
+
         }
         if(locacion ==2){
             gridPane1.getChildren().clear();
