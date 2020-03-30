@@ -117,7 +117,7 @@ public class Controller {
 
 
         BtnJson.setOnAction(event -> {
-            //Para generar el json
+            ObtenerJson(id);
         });
 
 
