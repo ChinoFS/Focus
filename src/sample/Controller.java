@@ -82,7 +82,6 @@ public class Controller {
 
         gridPane1.getChildren().clear();
 
-
         environment.setMinHeight(50);
         environment.setMinWidth(50);
         environment1.setMinHeight(50);
