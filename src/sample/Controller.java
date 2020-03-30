@@ -2,14 +2,16 @@ package sample;
 
 import com.mongodb.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.StageStyle;
 
+import javax.swing.text.Style;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +31,24 @@ public class Controller {
     ArrayList<String> desc = new ArrayList<>();
     String descr;
 
+    TextArea environment = new TextArea();
+    TextArea environment1 = new TextArea();
+    Label titulo = new Label();
+    Label descripcion = new Label();
+    Button prueba1 = new Button();
+    Button prueba2 = new Button();
+    Button prueba3 = new Button();
+    Button prueba4 = new Button();
+    Button prueba5 = new Button();
+    Button prueba6 = new Button();
+    Button verificar = new Button();
+    ArrayList<dateFashion> dateFashion = new ArrayList<>();
+
     @FXML
     public void initialize() {
         conexion();
         DBCategorias();
-
+        codigosPruebas();
         inicio();
     }
 
@@ -74,17 +89,6 @@ public class Controller {
         batras.setVisible(true);
 
         descripciones();
-        TextArea environment = new TextArea();
-        TextArea environment1 = new TextArea();
-        Label titulo = new Label();
-        Label descripcion = new Label();
-        Button prueba1 = new Button();
-        Button prueba2 = new Button();
-        Button prueba3 = new Button();
-        Button prueba4 = new Button();
-        Button prueba5 = new Button();
-        Button prueba6 = new Button();
-        Button verificar = new Button();
 
         gridPane1.getChildren().clear();
 
@@ -95,12 +99,12 @@ public class Controller {
         titulo.setText(String.valueOf(id));
         descripcion.setText("Descripcion");
 
-        prueba1.setText("prueba 1");prueba1.setMinWidth(100);
-        prueba2.setText("prueba 2");prueba2.setMinWidth(100);
-        prueba3.setText("prueba 3");prueba3.setMinWidth(100);
-        prueba4.setText("prueba 4");prueba4.setMinWidth(100);
-        prueba5.setText("prueba 5");prueba5.setMinWidth(100);
-        prueba6.setText("prueba 6");prueba6.setMinWidth(100);
+        prueba1.setText(dateFashion.get(0).nombre);prueba1.setMinWidth(100);
+        prueba2.setText(dateFashion.get(1).nombre);prueba2.setMinWidth(100);
+        prueba3.setText(dateFashion.get(2).nombre);prueba3.setMinWidth(100);
+        prueba4.setText(dateFashion.get(3).nombre);prueba4.setMinWidth(100);
+        prueba5.setText(dateFashion.get(4).nombre);prueba5.setMinWidth(100);
+        prueba6.setText(dateFashion.get(5).nombre);prueba6.setMinWidth(100);
         verificar.setText("Verificar");
 
         HBox parte1 = new HBox();
@@ -110,7 +114,60 @@ public class Controller {
 
         VBox parteB = new VBox();
 
+        prueba1.setOnAction(event -> {
+            Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+            dialogo.setTitle("Posible Solucion");
+            dialogo.setHeaderText(null);
+            dialogo.setContentText("Codigo" + dateFashion.get(0).getDescripcion());
+            dialogo.initStyle(StageStyle.UTILITY);
+            dialogo.showAndWait();
 
+        });
+        prueba2.setOnAction(event -> {
+            Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+            dialogo.setTitle("Posible Solucion");
+            dialogo.setHeaderText(null);
+            dialogo.setContentText("Codigo" + dateFashion.get(1).getDescripcion());
+            dialogo.initStyle(StageStyle.UTILITY);
+            dialogo.showAndWait();
+
+        });
+        prueba3.setOnAction(event -> {
+            Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+            dialogo.setTitle("Posible Solucion");
+            dialogo.setHeaderText(null);
+            dialogo.setContentText("Codigo" + dateFashion.get(2).getDescripcion());
+            dialogo.initStyle(StageStyle.UTILITY);
+            dialogo.showAndWait();
+
+        });
+        prueba4.setOnAction(event -> {
+            Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+            dialogo.setTitle("Posible Solucion");
+            dialogo.setHeaderText(null);
+            dialogo.setContentText("Codigo" + dateFashion.get(3).getDescripcion());
+            dialogo.initStyle(StageStyle.UTILITY);
+            dialogo.showAndWait();
+
+        });
+        prueba5.setOnAction(event -> {
+            Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+            dialogo.setTitle("Posible Solucion");
+            dialogo.setHeaderText(null);
+            dialogo.setContentText("Codigo" + dateFashion.get(4).getDescripcion());
+            dialogo.initStyle(StageStyle.UTILITY);
+            dialogo.showAndWait();
+
+        });
+        prueba6.setOnAction(event -> {
+            Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+            dialogo.setTitle("Posible Solucion");
+            dialogo.setHeaderText(null);
+            dialogo.setContentText("Codigo" + dateFashion.get(5).getDescripcion());
+            dialogo.initStyle(StageStyle.UTILITY);
+            dialogo.showAndWait();
+
+        });
 
         parte1.getChildren().add(titulo);
         parte2.getChildren().add(descripcion);
@@ -122,12 +179,13 @@ public class Controller {
         gridPane1.add(parte2, 0, 1);
         gridPane1.add(parte3, 0, 2);
         gridPane1.add(parteB, 1, 2);
-        gridPane1.add(parte4, 2, 2);
+        //gridPane1.add(parte4, 2, 2);
         gridPane1.add(verificar, 0, 3);
 
         gridPane1.setVgap(15);
         gridPane1.setHgap(15);
         locacion = 3;
+
 
 
         //Aqui va su parte nestor y migue
@@ -200,6 +258,7 @@ public class Controller {
         db= mongoClient.getDB("Focus");
     }
     //------------------------------------------------------------------------------------------------------------------
+
     public void descripciones()
     {
         desc.add("");
@@ -212,7 +271,7 @@ public class Controller {
     public void codigosPruebas()
     {
         //---------------Array dateFashion--------------------------------
-        ArrayList<dateFashion> dateFashion = new ArrayList<>();
+
         dateFashion.add(new dateFashion("dateFashion(5, 10)","2", "public int dateFashion(int you, int date)\n" +
             " {\n" +
             "int val=0;\n" +
