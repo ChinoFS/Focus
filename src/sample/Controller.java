@@ -119,8 +119,8 @@ public class Controller {
                     " \"datos\" : \""+TDproblema+"\", \"return\" : \""+Rproblema+"\", \"categoria\" : \""+ID+"\"}";
             DBObject dbObject = (DBObject) JSON.parse(json);
             collection.insert(dbObject);
-            atras();
 
+            atras();
         }
     }
 
