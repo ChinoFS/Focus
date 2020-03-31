@@ -1,6 +1,7 @@
 package sample;
 
 import com.mongodb.*;
+import com.mongodb.util.JSON;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -12,10 +13,7 @@ import javax.swing.text.Style;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.beans.EventHandler;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Controller {
     MongoClient mongoClient;
@@ -27,6 +25,8 @@ public class Controller {
     @FXML
     Button batras;
     int locacion;
+    Button agregar = new Button("Agregar");
+
     String ID;
     String [] [] categorias;
     String [] problemas;
@@ -66,10 +66,66 @@ public class Controller {
         DBCategorias();
         codigosPruebas();
         inicio();
+        agregar.setOnAction(event -> Agregar(ID));
+    }
 
+    private void Agregar(String ID) {
+        if(locacion==1){
+            TextInputDialog input = new TextInputDialog();
+            input.setTitle("Agregar Categoria");
+            input.setContentText("Nombre de categoira:");
+            String respuesta = String.valueOf(input.showAndWait());
+            respuesta= respuesta.substring(0,respuesta.length()-1);
+            respuesta = respuesta.substring(9,respuesta.length());
+
+            DBCollection collection = db.getCollection("categoria");
+            String json = "{\"categoria\" : \""+respuesta+"\"}";
+            DBObject dbObject = (DBObject) JSON.parse(json);
+            collection.insert(dbObject);
+            atras();
+        }
+        if(locacion==2){
+            locacion=3;
+            TextInputDialog input = new TextInputDialog();
+            input.setTitle("Agregar Problema");
+            input.setContentText("Nombre del Problema:");
+            String Nproblema = String.valueOf(input.showAndWait());
+            Nproblema= Nproblema.substring(0,Nproblema.length()-1);
+            Nproblema = Nproblema.substring(9,Nproblema.length());
+
+            TextInputDialog input2 = new TextInputDialog();
+            input2.setTitle("Agregar Problema");
+            input2.setContentText("Descripcion del Problema:");
+            String Dproblema = String.valueOf(input2.showAndWait());
+            Dproblema= Dproblema.substring(0,Dproblema.length()-1);
+            Dproblema = Dproblema.substring(9,Dproblema.length());
+
+            TextInputDialog input3 = new TextInputDialog();
+            input3.setTitle("Agregar Problema");
+            input3.setContentText("Tipos de Datos Recibidos:");
+            String TDproblema = String.valueOf(input3.showAndWait());
+            TDproblema= TDproblema.substring(0,TDproblema.length()-1);
+            TDproblema = TDproblema.substring(9,TDproblema.length());
+
+            TextInputDialog input4 = new TextInputDialog();
+            input4.setTitle("Agregar Problema");
+            input4.setContentText("Tipos de Datos que regresa:");
+            String Rproblema = String.valueOf(input4.showAndWait());
+            Rproblema= Rproblema.substring(0,Rproblema.length()-1);
+            Rproblema = Rproblema.substring(9,Rproblema.length());
+
+            DBCollection collection = db.getCollection("problema");
+            String json = "{\"problema\" : \""+Nproblema+"\", \"descripcion\" : \""+Dproblema+"\"," +
+                    " \"datos\" : \""+TDproblema+"\", \"return\" : \""+Rproblema+"\", \"categoria\" : \""+ID+"\"}";
+            DBObject dbObject = (DBObject) JSON.parse(json);
+            collection.insert(dbObject);
+            atras();
+
+        }
     }
 
     public  void inicio (){
+        gridPane1.getChildren().clear();
         batras.setVisible(false);
         locacion = 1;
         for (int i=0;i<=categorias.length-1;i++){
@@ -81,6 +137,8 @@ public class Controller {
             titledPane.autosize();
             gridPane1.autosize();
         }
+
+        gridPane1.add(agregar,0,2);
     }
 
     public void problemas(String id) {
@@ -99,6 +157,7 @@ public class Controller {
             titledPane.autosize();
             gridPane1.autosize();
         }
+        gridPane1.add(agregar,0,2);
     }
 
     public void Problema(String id) {
@@ -148,17 +207,17 @@ public class Controller {
         gridPane1.setHgap(15);
         locacion = 3;
 
-
-
-        //Aqui va su parte nestor y migue
     }
 
     @FXML
     public void atras(){
         if(locacion ==1){
-
+            DBCategorias();
+            gridPane1.getChildren().clear();
+            inicio();
         }
         if(locacion ==2){
+            DBCategorias();
             gridPane1.getChildren().clear();
             parte1.getChildren().clear();
             parte3.getChildren().clear();
