@@ -121,7 +121,12 @@ public class Controller {
 
 
         BtnJson.setOnAction(event -> {
-            ObtenerJson(id);
+            Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+            dialogo.setTitle("Json");
+            dialogo.setHeaderText(null);
+            dialogo.setContentText("Resultado \n" + ObtenerJson(id));
+            dialogo.initStyle(StageStyle.UTILITY);
+            dialogo.showAndWait();
         });
 
 
@@ -231,10 +236,13 @@ public class Controller {
         try {
             while(cursor.hasNext()) {
                 return cursor.next();
+
             }
+
         } finally {
             cursor.close();
         }
+
         return null;
     }
 
