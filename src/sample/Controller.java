@@ -56,6 +56,10 @@ public class Controller {
     VBox parteB = new VBox();
 
 
+
+
+    boolean banderas = true;
+
     @FXML
     public void initialize() {
         conexion();
@@ -259,18 +263,41 @@ public class Controller {
                 closeFar(Integer.valueOf(campo1.getText()), Integer.valueOf(campo2.getText()), Integer.valueOf(campo3.getText()));
             });
         }else if(titulo.equals("wordMultiple")){
-            parte3.getChildren().addAll(campo1, campo2, campo3, campo4, campo5);
+            parte3.getChildren().addAll(campo1);
             gridPane1.add(parte3, 0, 3);
-            //wordMultiple(Integer.valueOf(campo1),) NO HABILITADO
+            prueba1.setOnAction(event ->{
+                String [] arre3 = new String[campo1.getLength()];
+                for(int i = 0; i < campo1.getText().length(); i++ )
+                {
+                    arre3[i] = String.valueOf(campo1.getText().charAt(i));
+                }
+                wordMultiple(arre3);
+            });
         }else if(titulo.equals("notReplace")){
             parte3.getChildren().addAll(campo1);
             gridPane1.add(parte3, 0, 3);
             prueba1.setOnAction(event -> {
                 notReplace(campo1.getText());
             });
-
         }else if(titulo.equals("linearIn")){
-            //linearIn() NO HABILITADO
+            parte3.getChildren().addAll(campo1, campo2);
+            gridPane1.add(parte3, 0, 3);
+            prueba1.setOnAction(event -> {
+                int [] arre1 = new int[campo1.getLength()];
+                String cadena1;
+                int [] arre2 = new int[campo2.getLength()];
+                String cadena2;
+                for(int i = 0; i < campo1.getText().length(); i++ )
+                {
+                    cadena1 = String.valueOf(campo1.getText().charAt(i));
+                    arre1[i] = Integer.valueOf(cadena1);
+                }
+                for(int x = 0; x < campo2.getText().length(); x++){
+                    cadena2 = String.valueOf(campo2.getText().charAt(x));
+                    arre1[x] = Integer.valueOf(cadena2);
+                }
+                linearIn(arre1, arre2);
+            });
         }
     }
     //--------Codigos CodingBat-----------------------------------------------------------------------------------------
@@ -336,6 +363,13 @@ public class Controller {
                 map.put(s,false);
             }
         }
+        Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+        dialogo.setTitle("Prueba Unitaria");
+        dialogo.setHeaderText(null);
+        dialogo.setContentText("Resultado \n" + map);
+        dialogo.initStyle(StageStyle.UTILITY);
+        dialogo.showAndWait();
+
         return map;
     }
     public String notReplace(String str)
@@ -367,10 +401,11 @@ public class Controller {
     }
     public boolean linearIn(int[] outer, int[] inner)
     {
+
         int numFound = 0;
 
         if(inner.length == 0)
-            return true;
+            banderas = true;
 
         int cont = 0;
         for(int i = 0; i < outer.length; i++)
@@ -380,13 +415,20 @@ public class Controller {
                 numFound++;
                 cont++;
             }
-            else if(outer[i] > inner[cont])
-                return false;
-
-            if(numFound == inner.length)
-                return true;
+            else if(outer[i] > inner[cont]) {
+                banderas = false;
+            }else if(numFound == inner.length) {
+                banderas = true;
+            }
         }
-        return false;
+        Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+        dialogo.setTitle("Prueba Unitaria");
+        dialogo.setHeaderText(null);
+        dialogo.setContentText("Resultado \n" + banderas);
+        dialogo.initStyle(StageStyle.UTILITY);
+        dialogo.showAndWait();
+
+        return banderas;
     }
     //------------------------------------------------------------------------------------------------------------------
     public void codigosPruebas()
