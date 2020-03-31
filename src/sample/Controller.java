@@ -84,6 +84,7 @@ public class Controller {
     }
 
     public void problemas(String id) {
+        System.out.println(id);
         ID = id;
         DBProblemas(id);
         batras.setVisible(true);
@@ -101,8 +102,6 @@ public class Controller {
     }
 
     public void Problema(String id) {
-
-        ID = id;
         batras.setVisible(true);
         gridPane1.getChildren().clear();
 
@@ -161,6 +160,11 @@ public class Controller {
         }
         if(locacion ==2){
             gridPane1.getChildren().clear();
+            parte1.getChildren().clear();
+            parte3.getChildren().clear();
+            parte2.getChildren().clear();
+            parte4.getChildren().clear();
+            parteB.getChildren().clear();
             inicio();
         }
         if(locacion ==3){
