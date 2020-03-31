@@ -120,6 +120,7 @@ public class Controller {
         metodos(titulo.getText());
 
 
+
         BtnJson.setOnAction(event -> {
             Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
             dialogo.setTitle("Json");
